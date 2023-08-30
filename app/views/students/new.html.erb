@@ -1,0 +1,51 @@
+<h1>New Student</h1>
+<%= form_for @student do |f| %>
+  <div>
+    <%= f.label :Photo %>
+    <%= f.text_field :photo%>
+  </div>
+  <div>
+    <%= f.label :Name %>
+    <%= f.text_field :name, required:true %>
+  </div>
+  <div>
+    <%= f.label :'Last Name' %>
+    <%= f.text_field :last_name, required:true%>
+  </div>
+  <div>
+    <%= f.label :Email %>
+    <%= f.email_field :email, required:true %>
+  </div>
+  <div>
+    <%= f.label :Password %>
+    <%= f.password_field :password, required:true %>
+  </div>
+  <div>
+    <%= f.label :'Number Account' %>
+    <%= f.number_field :account, maxlength: 8, required:true %>
+  </div>
+  <div>
+    <%= f.label :Group %>
+    <%= f.text_field :group, maxlength: 1, required:true%>
+  </div>
+  <div>
+    <%= f.label :Grade %>
+    <%= f.number_field :grade, maxlength: 1, required:true%>
+  </div>
+
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>
+
+
+<% if @student.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@student.errors.count, "error") %> prohibited this student from being saved:</h2>
+    <ul>
+      <% @student.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Administrator</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <main class="d-flex flex-nowrap">
+    <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary position-fixed vh-100" style="width: 280px;">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <img src="https://img.freepik.com/vector-gratis/diseno-icono-degradado-logotipo-empresa-moderna_53876-120504.jpg?w=826&t=st=1693366444~exp=1693367044~hmac=8dd716f6cb7664515a66c4f2707df8c484eaa72ae861ea2283305a6fb211f7ae" alt="" width="32" height="32" class="rounded-circle me-2">
+        <span class="fs-4">School</span>
+      </a>
+      <hr>
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <a href="<%= '/admin' %>" class="nav-link active" aria-current="page">
+              <i class="fa-solid fa-house me-2"></i>Home
+          </a>
+        </li>
+        <li>
+          <a href="<%= '/admin/students' %>" class="nav-link link-body-emphasis">
+              <i class="fa-solid fa-graduation-cap me-2"></i>Students
+          </a>
+        </li>
+        <li>
+          <a href="<%= '/admin/teachers' %>" class="nav-link link-body-emphasis">
+              <i class="fa-solid fa-chalkboard-user me-2"></i>Teachers
+          </a>
+        </li>
+        <li>
+          <a href="<%= '/admin/assignments' %>" class="nav-link link-body-emphasis">
+              <i class="fa-solid fa-book-open me-2"></i>Assignments
+          </a>
+        </li>
+      </ul>
+      <hr>
+      <div class="dropdown">
+        <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+          <strong>User</strong>
+        </a>
+        <ul class="dropdown-menu text-small shadow">
+          <li><a class="dropdown-item" href="#">Settings</a></li>
+          <li><a class="dropdown-item" href="#">Profile</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#">Sign out</a></li>
+        </ul>
+      </div>
+    </div>  
+  </main>
+</body>
+</html>

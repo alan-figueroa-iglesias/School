@@ -1,0 +1,26 @@
+<div class="container-md mt-5"> 
+    <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Account</th>
+            <th scope="col">Group</th>
+            <th scope="col">Grade</th>
+            <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <%= render @students %> <br> <%# Equivalente a iterar toda la bd con each %>
+        </tbody>
+    </table>
+    
+    <%= link_to root_path, class: "btn btn-primary" do %>
+        <i class="fa-solid fa-house"></i>
+    <% end %>
+
+</div>
+
+
