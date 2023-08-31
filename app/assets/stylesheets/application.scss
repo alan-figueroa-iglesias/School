@@ -15,6 +15,10 @@
  @import "bootstrap";
  @import "font-awesome";
 
+body{
+	background-color: #f5f5f5;
+}
+
  /* Agrega un estilo para la notificación */
 .fixed-notification {
 	position: fixed;
@@ -55,33 +59,24 @@
     align-items: center;
 }
 
-body {
-	color: #566787;
-	background: #f5f5f5;
-}
-
 //Table
-.content-area {
-	margin-left: 280px; /* Ancho de la barra lateral */
-	padding: 30px; /* Agrega un espacio alrededor del contenido */
-  }
-
-  .actions-column {
-	display: table-cell;
-	width: 60px; /* Ancho original de la columna de acciones */
-	white-space: nowrap; /* Evita que los íconos se rompan en varias líneas */
-	overflow: hidden;
-	text-overflow: ellipsis;
-  }
-  
-
 .container-xl{
     font-family: 'Varela Round', sans-serif;
 	font-size: 13px;
     display: flex;
     justify-content: center; /* Centra horizontalmente */
     align-items: center; /* Centra verticalmente */
+	margin-left: 280px; /* Ancho de la barra lateral */
+	padding: 30px;
     height: 100vh; /* Ocupa el 100% del alto de la ventana */
+} 
+
+.actions-column {
+	display: table-cell;
+	width: 60px; /* Ancho original de la columna de acciones */
+	white-space: nowrap; /* Evita que los íconos se rompan en varias líneas */
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .search-box {
@@ -154,6 +149,11 @@ body {
 	float: left;
 	margin-top: 2px;
 }
+
+table thead tr th{
+	text-align: center;
+}
+
 table.table tr th, table.table tr td {
 	border-color: #e9e9e9;
 	padding: 12px 15px;
@@ -213,6 +213,11 @@ table.table .avatar {
 }    
 
 /* Modal styles */
+.modal{
+	background-color: rgba(0, 0, 0, 0.5) !important;
+	z-index: 100000000;
+}
+
 .modal .modal-dialog {
 	max-width: 400px;    
 }
@@ -225,7 +230,7 @@ table.table .avatar {
 	font-size: 14px;
 }
 .modal .modal-footer {
-	background: #ecf0f1;
+	//background: #ecf0f1;
 	border-radius: 0 0 3px 3px;
 }
 .modal .modal-title {
@@ -235,9 +240,6 @@ table.table .avatar {
 	border-radius: 2px;
 	box-shadow: none;
 	border-color: #dddddd;
-}
-.modal textarea.form-control {
-	resize: vertical;
 }
 .modal .btn {
 	border-radius: 2px;

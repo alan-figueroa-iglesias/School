@@ -18,5 +18,7 @@
 //= require_tree .
 
 /* global bootstrap: false */
- 
- 
+
+function loadEditModal(studentId) {
+    console.log("Este es el ID del ESTUDIANTE: " + studentId)
+}
