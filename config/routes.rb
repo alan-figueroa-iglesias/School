@@ -21,6 +21,11 @@ Rails.application.routes.draw do
   patch '/admin/teachers/:id', to: 'admins#update_teacher', as: 'update_admin_teacher'
 
 
-  get '/admin/assignments', to: 'admins#assignments'
+  get '/admin/assigments', to: 'admins#assigments'
+  get '/admin/assigments', to: 'admins#assigments'
+  get '/admin/assigments/:id/edit', to: 'admins#edit_assigment', as: 'edit_admin_assigment'
+  post '/admin/create_assigment', to: 'admins#create_assigment'
+  delete '/admin/assigments/:id', to: 'admins#delete_assigment', as: 'delete_admin_assigment'
+  patch '/admin/assigments/:id', to: 'admins#update_assigment', as: 'update_admin_assigment'
 
 end

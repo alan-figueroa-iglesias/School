@@ -73,6 +73,43 @@ class AdminsController < ApplicationController
     @teacher.destroy
     redirect_to '/admin/teachers', flash: { warning: 'Teacher was successfully deleted.' }
   end
+
+  #-----------------------------------------------------------------------------------------------
+
+  def assigments
+    @assigments = Assigment.paginate(page: params[:page], per_page: 12)
+    @assigment_new = Assigment.new
+  end
+
+  def create_assigment
+    @assigment_new = Assigment.new(assigment_params)
+    if @assigment_new.save
+      redirect_to '/admin/assigments', flash: { success: 'Assigment was successfully created.' }
+    else
+      @assigments = Assigment.paginate(page: params[:page], per_page: 12)
+      @alert_message = 'Failed to create assigment. Please check the form.'
+      render :assigments
+    end
+  end
+
+  def edit_assigment
+    @assigment = Assigment.find(params[:id])
+  end
+
+  def update_assigment
+    @assigment = Assigment.find(params[:id])
+    if @assigment.update(assigment_params)
+      redirect_to '/admin/assigments', flash: { success: 'Assigment was successfully updated.' }
+    else
+      render :edit_assigment
+    end
+  end
+
+  def delete_assigment
+    @assigment = Assigment.find(params[:id])
+    @assigment.destroy
+    redirect_to '/admin/assigments', flash: { warning: 'Assigment was successfully deleted.' }
+  end
   
   private
 
@@ -82,6 +119,10 @@ class AdminsController < ApplicationController
 
   def teacher_params
     params.require(:teacher).permit(:name, :last_name, :email, :account)
+  end
+  
+  def assigment_params
+    params.require(:assigment).permit(:name)
   end
 
 end
