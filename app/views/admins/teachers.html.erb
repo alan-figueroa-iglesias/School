@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <title>Administrator</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
     <main class="d-flex flex-nowrap">
@@ -51,5 +54,105 @@
             </div>
         </div>  
     </main>
+
+    <div class="container-xl">
+        <div class="table-responsive">
+            <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h2>Manage <b>Teachers</b></h2>
+                        </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex justify-content-end">
+                            <div class="search-box">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" class="form-control" placeholder="Search&hellip;">
+                            </div>
+                            <button id="addStudentBtn" class="btn btn-success" data-toggle="modal" data-target="#addStudentModal" style="width: 100px;"><i class="fa-solid fa-plus"></i> <span>Add</span></button> 
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="table-responsive custom-table-size">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Account</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @teachers.each do |teacher| %>
+                        <tr> 
+                            <td style="text-align: center;"> <%= teacher.id %>          </td>
+                            <td> <%= teacher.name %>                                    </td>
+                            <td> <%= teacher.last_name %>                               </td>
+                            <td style="text-align: center;"> <%= teacher.email %>       </td>
+                            <td style="text-align: center;"> <%= teacher.account %>     </td>
+                            <td class="actions-column">                               
+                                <%= link_to edit_admin_teacher_path(teacher), class: 'edit' do %>
+                                    <i class="fa-solid fa-pen"></i>
+                                <% end %>
+                                <%= link_to delete_admin_teacher_path(teacher), method: :delete, data: { confirm: 'Delete this teacher?' }, class: 'delete' do %>
+                                    <i class="fa-solid fa-trash"></i>
+                                <% end %>
+                            </td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+            </div>
+            <div class="clearfix">
+                <div class="hint-text">Showing <b>1</b> out of <b>?</b> entries</div>
+                <%= will_paginate @teachers, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+            </div>
+
+            </div>
+        </div>        
+    </div>
+
+  <!-- add Modal HTML -->
+  <%= form_for :teacher, url: '/admin/create_teacher' do |f| %>
+    <div id="addStudentModal" class="modal fade">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">						
+                    <h4 class="modal-title">Add Teacher</h4>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="modal-body">					
+                  <div class="form-group">
+                      <%= f.label :Name%>
+                      <%= f.text_field :name, class: "form-control", required: true, pattern: "[a-zA-Zá-úÁ-Ú\s]*", title: "Enter a valid name"  %>
+                  </div>
+                  <div class="form-group">
+                      <%= f.label :'Last Name'%>
+                      <%= f.text_field :last_name, class: "form-control", required: true, pattern: "[a-zA-Zá-úÁ-Ú\s]*", title: "Enter a valid last name" %>
+                  </div>
+                  <div class="form-group">
+                      <%= f.label :Email%>
+                      <%= f.email_field :email, class: "form-control", required: true %>
+                  </div>
+                  <div class="form-group">
+                      <%= f.label :'Number Account'%>
+                      <%= f.number_field :account, class: "form-control", required: true, min: 10000000, max: 99999999, oninput: "this.value = this.value.slice(0, 8).replace(/[^0-9]/g, '')", title: "Enter a valid number account" %>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                    <%= f.submit "Add", class: "btn btn-success"%>
+                </div>
+            </div>
+        </div>
+    </div>
+  <% end %>
+  <%= render 'alert' %>  
+
 </body>
 </html>

@@ -66,9 +66,7 @@ body{
     display: flex;
     justify-content: center; /* Centra horizontalmente */
     align-items: center; /* Centra verticalmente */
-	margin-left: 280px; /* Ancho de la barra lateral */
-	padding: 30px;
-    height: 100vh; /* Ocupa el 100% del alto de la ventana */
+	margin-left: 280px; /* Ancho de la barra lateral */    
 } 
 
 .actions-column {
@@ -200,11 +198,7 @@ table.table td a.delete {
 table.table td i {
 	font-size: 19px;
 }
-table.table .avatar {
-	border-radius: 50%;
-	vertical-align: middle;
-	margin-right: 10px;
-}
+
  
 .hint-text {
 	float: left;
@@ -247,7 +241,4 @@ table.table .avatar {
 }	
 .modal form label {
 	font-weight: normal;
-}	
-
-
- 
+}
