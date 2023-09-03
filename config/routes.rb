@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :teachers
   
   root 'pages#home'
+  get '/login', to: 'pages#login'
 
   get '/admin', to: 'admins#home'
   get '/admin/students', to: 'admins#students'
