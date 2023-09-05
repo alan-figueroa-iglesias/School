@@ -58,5 +58,19 @@
     </div>  
   </main>
   
+  <div class="container-xl" style="margin-left: 50px; margin-top: 50px">
+    <% if current_user.is_a?(Admin) %>
+    <p>Welcome <%= current_user.class.name %>:</p>
+  <ul>
+    <li>Nombre: <%= current_user.name %></li>
+    <li>Email: <%= current_user.email %></li>
+    <!-- Otros datos del usuario -->
+  </ul>
+  <%= link_to 'Cerrar sesión', logout_path, method: :delete, class: 'btn btn-danger' %>
+<% else %>
+  <p>No has iniciado sesión como admin.</p>
+<% end %>
+  </div>
+  
 </body>
 </html>
