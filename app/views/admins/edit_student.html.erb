@@ -15,71 +15,75 @@
     }
 </style>
 
-<section class="vh-100" style="background-color: #f4f5f7;">
-  <div class="container py-5 h-100" >
-    <div class="row d-flex justify-content-center align-items-center h-100" >
-      <div class="col col-lg-6 mb-4 mb-lg-0" >
-        <div class="card mb-3 profile" style="border-radius: .5rem;">
-            <%= form_for @student, url: update_admin_student_path(@student), html: { class: "row g-0", method: :patch } do |f| %>
-                <div class="col-md-4 gradient-custom text-center text-white" style="border-radius: .5rem; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                    <img src="https://cdn.icon-icons.com/icons2/2859/PNG/512/avatar_face_man_boy_male_profile_smiley_happy_people_icon_181657.png"
-                        alt="Avatar" class="img-fluid my-5" style="width: 100px; display: block; margin: 0 auto;" />
-                    <i class="far fa-edit mb-5"></i>
-                </div>
+<% if current_user.is_a?(Admin) %>
+    <section class="vh-100" style="background-color: #f4f5f7;">
+    <div class="container py-5 h-100" >
+        <div class="row d-flex justify-content-center align-items-center h-100" >
+        <div class="col col-lg-6 mb-4 mb-lg-0" >
+            <div class="card mb-3 profile" style="border-radius: .5rem;">
+                <%= form_for @student, url: update_admin_student_path(@student), html: { class: "row g-0", method: :patch } do |f| %>
+                    <div class="col-md-4 gradient-custom text-center text-white" style="border-radius: .5rem; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                        <img src="https://cdn.icon-icons.com/icons2/2859/PNG/512/avatar_face_man_boy_male_profile_smiley_happy_people_icon_181657.png"
+                            alt="Avatar" class="img-fluid my-5" style="width: 100px; display: block; margin: 0 auto;" />
+                        <i class="far fa-edit mb-5"></i>
+                    </div>
 
-                <div class="col-md-8">
-                    <div class="card-body p-4">
-                        <h6>Information</h6>
-                        <hr class="mt-0 mb-4">
-                        <div class="row pt-1">
-                            <div class="col-6 mb-3">
-                                <h6>Name</h6>
-                                <%= f.text_field :name, class: "form-control", required: true, pattern: "[a-zA-Zá-úÁ-Ú\s]*", title: "Enter a valid name"  %>
+                    <div class="col-md-8">
+                        <div class="card-body p-4">
+                            <h6>Information</h6>
+                            <hr class="mt-0 mb-4">
+                            <div class="row pt-1">
+                                <div class="col-6 mb-3">
+                                    <h6>Name</h6>
+                                    <%= f.text_field :name, class: "form-control", required: true, pattern: "[a-zA-Zá-úÁ-Ú\s]*", title: "Enter a valid name"  %>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <h6>Last Name</h6>
+                                    <%= f.text_field :last_name, class: "form-control", required: true, pattern: "[a-zA-Zá-úÁ-Ú\s]*", title: "Enter a valid last name" %>
+                                </div>
                             </div>
-                            <div class="col-6 mb-3">
-                                <h6>Last Name</h6>
-                                <%= f.text_field :last_name, class: "form-control", required: true, pattern: "[a-zA-Zá-úÁ-Ú\s]*", title: "Enter a valid last name" %>
+                            <div class="form-group mb-3">
+                                <h6>Email</h6>
+                                <%= f.email_field :email, class: "form-control", required: true %>
                             </div>
-                        </div>
-                        <div class="form-group mb-3">
-                            <h6>Email</h6>
-                            <%= f.email_field :email, class: "form-control", required: true %>
-                        </div>
-                        <div class="form-group mb-3">
-                            <h6>Number Account</h6>
-                            <%= f.number_field :account, class: "form-control", required: true, min: 10000000, max: 99999999, oninput: "this.value = this.value.slice(0, 8).replace(/[^0-9]/g, '')", title: "Enter a valid number account" %>
-                        </div>
-                        <div class="row pt-1">
-                            <div class="col-6 mb-3">
-                                <h6>Group</h6>
-                                <%= f.text_field :group, class: "form-control", required: true, maxlength: 1, pattern: "[a-zA-Z]*", oninput: "this.value = this.value.toUpperCase()"  %>
+                            <div class="form-group mb-3">
+                                <h6>Number Account</h6>
+                                <%= f.number_field :account, class: "form-control", required: true, min: 10000000, max: 99999999, oninput: "this.value = this.value.slice(0, 8).replace(/[^0-9]/g, '')", title: "Enter a valid number account" %>
                             </div>
-                            <div class="col-6 mb-3">
-                                <h6>Grade</h6>
-                                <%= f.number_field :grade, class: "form-control", required: true, maxlength: 1, oninput: "this.value = this.value.slice(0, 1).replace(/[^0-9]/g, '')" %>
+                            <div class="row pt-1">
+                                <div class="col-6 mb-3">
+                                    <h6>Group</h6>
+                                    <%= f.text_field :group, class: "form-control", required: true, maxlength: 1, pattern: "[a-zA-Z]*", oninput: "this.value = this.value.toUpperCase()"  %>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <h6>Grade</h6>
+                                    <%= f.number_field :grade, class: "form-control", required: true, maxlength: 1, oninput: "this.value = this.value.slice(0, 1).replace(/[^0-9]/g, '')" %>
+                                </div>
                             </div>
-                        </div>
-                        <h6>Teachers</h6>
-                        <hr class="mt-0 mb-4">
-                        <div class="row pt-1">
-                            <div class="col-6 mb-3">
-                                <h6>Recent</h6>
-                                <p class="text-muted">Lorem ipsum</p>
+                            <h6>Teachers</h6>
+                            <hr class="mt-0 mb-4">
+                            <div class="row pt-1">
+                                <div class="col-6 mb-3">
+                                    <h6>Recent</h6>
+                                    <p class="text-muted">Lorem ipsum</p>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <h6>Most Viewed</h6>
+                                    <p class="text-muted">Dolor sit amet</p>
+                                </div>
                             </div>
-                            <div class="col-6 mb-3">
-                                <h6>Most Viewed</h6>
-                                <p class="text-muted">Dolor sit amet</p>
+                            <div class="d-flex justify-content-end">
+                                <a href="<%= '/admin/students' %>" class="btn" aria-current="page" style="margin-right: 10px;"> Cancel </a>
+                                <%= f.submit 'Update', class: 'btn btn-success' %>
                             </div>
-                        </div>
-                        <div class="d-flex justify-content-end">
-                            <a href="<%= '/admin/students' %>" class="btn" aria-current="page" style="margin-right: 10px;"> Cancel </a>
-                            <%= f.submit 'Update', class: 'btn btn-success' %>
                         </div>
                     </div>
-                </div>
-            <% end  %>
+                <% end  %>
+            </div>
         </div>
-      </div>
+        </div>
     </div>
-  </div>
-</section>
+    </section>
+<% else %>
+<p>No has iniciado sesión como admin.</p>
+<% end %>
