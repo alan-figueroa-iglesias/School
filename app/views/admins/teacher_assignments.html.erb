@@ -1,0 +1,27 @@
+<h1>Teacher Assignments <%= @name_teacher %></h1>
+
+<table class="table" style="text-align: center;">
+  <thead>
+    <tr>
+      <th>Assignment</th>
+      <th>Grade</th>
+      <th>Groups</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% unique_assignments = @assignments.uniq { |assignment| assignment.assignment.name } %>
+    <% unique_assignments.each do |assignment| %>
+      <% grade_groups = @assignments.select { |a| a.assignment.name == assignment.assignment.name }.group_by(&:grade) %>
+      <tr>
+        <td><%= assignment.assignment.name %></td>
+        <td>
+          <%= grade_groups.keys.join(', ') %>
+        </td>
+        <td>
+          <% groups = grade_groups.values.map { |grades| grades.map(&:group).join(', ') } %>
+          <%= groups.join(', ') %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

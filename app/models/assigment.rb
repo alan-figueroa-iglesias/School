@@ -1,2 +1,0 @@
-class Assigment < ApplicationRecord
-end

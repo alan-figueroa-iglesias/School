@@ -37,7 +37,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<%= '/admin/assigments' %>" class="nav-link link-body-emphasis">
+                    <a href="<%= '/admin/assignments' %>" class="nav-link link-body-emphasis">
                         <i class="fa-solid fa-book-open me-2"></i>Assignments
                     </a>
                 </li>
@@ -86,8 +86,8 @@
                         <th>Last Name</th>
                         <th>Email</th>
                         <th>Account</th>
-                        <th>Group</th>
                         <th>Grade</th>
+                        <th>Group</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -99,8 +99,8 @@
                             <td> <%= student.last_name %>                               </td>
                             <td style="text-align: center;"> <%= student.email %>       </td>
                             <td style="text-align: center;"> <%= student.account %>     </td>
-                            <td style="text-align: center;"> <%= student.group %>       </td>
                             <td style="text-align: center;"> <%= student.grade %>       </td>
+                            <td style="text-align: center;"> <%= student.group %>       </td>
                             <td class="actions-column">                               
                                 <%= link_to edit_admin_student_path(student), class: 'edit' do %>
                                     <i class="fa-solid fa-pen"></i>
@@ -146,17 +146,21 @@
                       <%= f.email_field :email, class: "form-control", required: true %>
                   </div>
                   <div class="form-group">
+                    <%= f.label :Password%>
+                    <%= f.password_field :password, class: "form-control", required: true %>
+                </div>
+                  <div class="form-group">
                       <%= f.label :'Number Account'%>
                       <%= f.number_field :account, class: "form-control", required: true, min: 10000000, max: 99999999, oninput: "this.value = this.value.slice(0, 8).replace(/[^0-9]/g, '')", title: "Enter a valid number account" %>
                   </div>
                   <div class="row g-3">
                     <div class="col-md-6">
-                        <%= f.label :Group%>
-                        <%= f.text_field :group, class: "form-control", required: true, maxlength: 1, pattern: "[a-zA-Z]*", oninput: "this.value = this.value.toUpperCase()"  %>
-                    </div>
-                    <div class="col-md-6">
                         <%= f.label :Grade%>
                         <%= f.number_field :grade, class: "form-control", required: true, maxlength: 1, oninput: "this.value = this.value.slice(0, 1).replace(/[^0-9]/g, '')" %>
+                    </div>
+                    <div class="col-md-6">
+                        <%= f.label :Group%>
+                        <%= f.text_field :group, class: "form-control", required: true, maxlength: 1, pattern: "[a-zA-Z]*", oninput: "this.value = this.value.toUpperCase()"  %>
                     </div>    
                   </div>								
                 </div>

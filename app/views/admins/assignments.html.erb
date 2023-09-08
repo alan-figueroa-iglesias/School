@@ -36,7 +36,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<%= '/admin/assigments' %>" class="nav-link active" aria-current="page">
+                    <a href="<%= '/admin/assignments' %>" class="nav-link active" aria-current="page">
                         <i class="fa-solid fa-book-open me-2"></i>Assignments
                     </a>
                 </li>
@@ -83,20 +83,23 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
+                        <th>Grade</th>
+                        <th>Group</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <% @assigments.each do |assigment| %>
+                    <% @assignments.each do |assignment| %>
                         <tr> 
-                            <td style="text-align: center;"> <%= assigment.id %>          </td>
-                            <td style="text-align: center;"> <%= assigment.name %>                                    </td>
-                            
+                            <td style="text-align: center;"> <%= assignment.id %>          </td>
+                            <td style="text-align: center;"> <%= assignment.name %>        </td>
+                            <td style="text-align: center;"> <%= assignment.grade %>       </td>
+                            <td style="text-align: center;"> <%= assignment.group %>       </td>
                             <td class="actions-column">                               
-                                <%= link_to edit_admin_assigment_path(assigment), class: 'edit' do %>
+                                <%= link_to edit_admin_assignment_path(assignment), class: 'edit' do %>
                                     <i class="fa-solid fa-pen"></i>
                                 <% end %>
-                                <%= link_to delete_admin_assigment_path(assigment), method: :delete, data: { confirm: 'Delete this assigment?' }, class: 'delete' do %>
+                                <%= link_to delete_admin_assignment_path(assignment), method: :delete, data: { confirm: 'Delete this assignment?' }, class: 'delete' do %>
                                     <i class="fa-solid fa-trash"></i>
                                 <% end %>
                             </td>
@@ -107,7 +110,7 @@
             </div>
             <div class="clearfix">
                 <div class="hint-text">Showing <b>1</b> out of <b>?</b> entries</div>
-                <%= will_paginate @assigments, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+                <%= will_paginate @assignments, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
             </div>
 
             </div>
@@ -115,19 +118,37 @@
     </div>
 
   <!-- add Modal HTML -->
-  <%= form_for :assigment, url: '/admin/create_assigment' do |f| %>
+  <%= form_for :assignment, url: '/admin/create_assignment' do |f| %>
     <div id="addStudentModal" class="modal fade">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">						
+                <div class="modal-header">											
                     <h4 class="modal-title">Add Assignment</h4>
                     <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true"></button>
                 </div>
                 <div class="modal-body">					
-                  <div class="form-group">
-                      <%= f.label :Name%>
-                      <%= f.text_field :name, class: "form-control", required: true, pattern: "[a-zA-Zá-úÁ-Ú\s]*", title: "Enter a valid assignature"  %>
-                  </div>
+                    <div class="form-group">
+                        <%= f.label :Name%>
+                        <%= f.text_field :name, class: "form-control", required: true, pattern: "[a-zA-Zá-úÁ-Ú\s]*", title: "Enter a valid assignature"  %>
+                    </div> 
+                    <div class="form-group">
+                        <%= f.label :Grade %>
+                        <%= f.select :grade, [1,2,3,4,5,6], { selected: 1 }, class: "form-select", required: true %>                                        
+                    </div>
+                    <div class="form-group">
+                        <%= f.label :Group %>
+                        <div class="form-check form-check-inline" style="position: relative; float: right;">
+                            <label class="form-check-label" style="position: absolute; top: 50%; transform: translateY(-50%);" >All</label> 
+                            <input class="form-check-input" type="checkbox" id="select-all-checkbox" style="width: 20px; height: 20px; margin-right: 5px;">
+                        </div>
+                        <br> 
+                        <% ('A'..'F').to_a.each do |group| %>
+                          <div class="form-check form-check-inline" style="position: relative;">
+                            <%= check_box_tag 'assignment[group][]', group, params[:assignment].present? && params[:assignment][:group].present? && params[:assignment][:group].include?(group), class: 'form-check-input', style: "width: 20px; height: 20px; margin-right: 5px;" %>
+                            <%= label_tag "assignment_group_#{group}", group, class: 'form-check-label', style: "position: absolute; top: 50%; transform: translateY(-50%);" %>
+                          </div>
+                        <% end %>
+                    </div>                   
                 </div>
                 <div class="modal-footer">
                     <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">

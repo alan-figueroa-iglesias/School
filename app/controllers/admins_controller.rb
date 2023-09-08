@@ -70,60 +70,97 @@ class AdminsController < ApplicationController
 
   def delete_teacher
     @teacher = Teacher.find(params[:id])
+    TeacherAssignment.where(teacher_id: @teacher).destroy_all
     @teacher.destroy
     redirect_to '/admin/teachers', flash: { warning: 'Teacher was successfully deleted.' }
   end
 
   #-----------------------------------------------------------------------------------------------
 
-  def assigments
-    @assigments = Assigment.paginate(page: params[:page], per_page: 12)
-    @assigment_new = Assigment.new
+  def assignments
+    @assignments = Assignment.paginate(page: params[:page], per_page: 12)
+    @assignment_new = Assignment.new
   end
 
-  def create_assigment
-    @assigment_new = Assigment.new(assigment_params)
-    if @assigment_new.save
-      redirect_to '/admin/assigments', flash: { success: 'Assigment was successfully created.' }
+  def create_assignment
+    @assignment_new = Assignment.new(assignment_params)
+
+    if params[:assignment][:group].present?
+      group = params[:assignment][:group].join(' ')
     else
-      @assigments = Assigment.paginate(page: params[:page], per_page: 12)
-      @alert_message = 'Failed to create assigment. Please check the form.'
-      render :assigments
+      @alert_message = 'Failed'
+    end
+    
+    @assignment_new.group = group  
+    if @assignment_new.save
+      redirect_to '/admin/assignments', flash: { success: 'Assignment was successfully created.' }
+    else
+      @assignments = Assignment.paginate(page: params[:page], per_page: 12)
+      @alert_message = 'Failed to create assignment. Please check the form.'
+      render :assignments
     end
   end
 
-  def edit_assigment
-    @assigment = Assigment.find(params[:id])
+  def edit_assignment
+    @assignment = Assignment.find(params[:id])
   end
 
-  def update_assigment
-    @assigment = Assigment.find(params[:id])
-    if @assigment.update(assigment_params)
-      redirect_to '/admin/assigments', flash: { success: 'Assigment was successfully updated.' }
+  def update_assignment
+    @assignment = Assignment.find(params[:id])
+  
+    if params[:assignment].key?(:group)
+      @assignment.update(group: params[:assignment][:group].join(' '))
+  
+      if @assignment.update(assignment_params)
+        redirect_to '/admin/assignments', flash: { success: 'Assignment was successfully updated.' }
+      else
+        @alert_message = 'Please insert at name assignment.'
+        render :edit_assignment
+      end
     else
-      render :edit_assigment
+      @alert_message = 'Please select at least one group.'
+      render :edit_assignment
+    end
+  end
+  
+
+  def delete_assignment
+    @assignment = Assignment.find(params[:id])
+    @assignment.destroy
+    redirect_to '/admin/assignments', flash: { warning: 'Assignment was successfully deleted.' }
+  end
+
+  #-----------------------------------------------------------------------------------------------
+
+  def teacher_assignments
+    # Encuentra al maestro por su nombre, por ejemplo, "Carlos"
+    teacher = Teacher.find_by(name: "Manuel")
+    @name_teacher = teacher.name
+
+    if teacher
+      # Obtén todas las asignaturas que imparte el maestro Carlos
+      @assignments = teacher.teacher_assignments
+    else
+      # Maneja el caso en el que el maestro no se encuentra
+      @assignments = []
     end
   end
 
-  def delete_assigment
-    @assigment = Assigment.find(params[:id])
-    @assigment.destroy
-    redirect_to '/admin/assigments', flash: { warning: 'Assigment was successfully deleted.' }
-  end
   
   private
 
   def student_params
-    params.require(:student).permit(:name, :last_name, :email, :account, :group, :grade)
+    params.require(:student).permit(:name, :last_name, :email, :password, :account, :grade, :group)
   end
 
   def teacher_params
-    params.require(:teacher).permit(:name, :last_name, :email, :account)
+    params.require(:teacher).permit(:name, :last_name, :email, :password, :account)
   end
   
-  def assigment_params
-    params.require(:assigment).permit(:name)
+  def assignment_params
+    params.require(:assignment).permit(:name, :grade, :group)
   end
+  
 
 end
   

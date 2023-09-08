@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_05_061206) do
+ActiveRecord::Schema.define(version: 2023_09_08_004744) do
 
   create_table "admins", force: :cascade do |t|
     t.string "photo"
@@ -23,8 +23,10 @@ ActiveRecord::Schema.define(version: 2023_09_05_061206) do
     t.string "password_digest"
   end
 
-  create_table "assigments", force: :cascade do |t|
+  create_table "assignments", force: :cascade do |t|
     t.string "name"
+    t.integer "grade", limit: 1
+    t.string "group"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

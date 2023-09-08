@@ -18,3 +18,24 @@
 //= require_tree .
 
 /* global bootstrap: false */
+
+// Function for mark all checkboxes in the groups assignments
+document.addEventListener('DOMContentLoaded', function () {
+    const selectAllCheckbox = document.getElementById('select-all-checkbox');
+    const groupCheckboxes = document.querySelectorAll('input[name="assignment[group][]"]');
+
+    selectAllCheckbox.addEventListener('change', function () {
+        groupCheckboxes.forEach(function (checkbox) {
+        checkbox.checked = selectAllCheckbox.checked;
+        });
+    });
+
+    groupCheckboxes.forEach(function (checkbox) {
+        checkbox.addEventListener('change', function () {
+        // Desmarcar "Seleccionar todo" si no todos los checkboxes están marcados
+        if (!checkbox.checked) {
+            selectAllCheckbox.checked = false;
+        }
+        });
+    });
+});

@@ -52,12 +52,12 @@
                             </div>
                             <div class="row pt-1">
                                 <div class="col-6 mb-3">
-                                    <h6>Group</h6>
-                                    <%= f.text_field :group, class: "form-control", required: true, maxlength: 1, pattern: "[a-zA-Z]*", oninput: "this.value = this.value.toUpperCase()"  %>
-                                </div>
-                                <div class="col-6 mb-3">
                                     <h6>Grade</h6>
                                     <%= f.number_field :grade, class: "form-control", required: true, maxlength: 1, oninput: "this.value = this.value.slice(0, 1).replace(/[^0-9]/g, '')" %>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <h6>Group</h6>
+                                    <%= f.text_field :group, class: "form-control", required: true, maxlength: 1, pattern: "[a-zA-Z]*", oninput: "this.value = this.value.toUpperCase()"  %>
                                 </div>
                             </div>
                             <h6>Teachers</h6>

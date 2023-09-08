@@ -2,6 +2,10 @@
 
 one:
   name: MyString
+  grade: 1
+  group: MyString
 
 two:
   name: MyString
+  grade: 1
+  group: MyString

@@ -3,12 +3,14 @@ Rails.application.routes.draw do
   resources :admins  
   resources :students
   resources :teachers
+  resources :assigments
   
   root 'pages#home' 
   get '/student', to: 'students#home', as: 'student_dashboard'
   get '/teacher', to: 'teachers#home', as: 'teacher_dashboard'
   get '/admin', to: 'admins#home', as: 'admin_dashboard'
 
+  get '/admin/teacher_assignments', to: 'admins#teacher_assignments'
 
   get '/login', to: 'pages#login'
   post '/login', to: 'pages#login_session' # Ruta para el inicio de sesión (POST)
@@ -26,10 +28,10 @@ Rails.application.routes.draw do
   delete '/admin/teachers/:id', to: 'admins#delete_teacher', as: 'delete_admin_teacher'
   patch '/admin/teachers/:id', to: 'admins#update_teacher', as: 'update_admin_teacher'
 
-  get '/admin/assigments', to: 'admins#assigments'
-  get '/admin/assigments/:id/edit', to: 'admins#edit_assigment', as: 'edit_admin_assigment'
-  post '/admin/create_assigment', to: 'admins#create_assigment'
-  delete '/admin/assigments/:id', to: 'admins#delete_assigment', as: 'delete_admin_assigment'
-  patch '/admin/assigments/:id', to: 'admins#update_assigment', as: 'update_admin_assigment'
+  get '/admin/assignments', to: 'admins#assignments'
+  get '/admin/assignments/:id/edit', to: 'admins#edit_assignment', as: 'edit_admin_assignment'
+  post '/admin/create_assignment', to: 'admins#create_assignment'
+  delete '/admin/assignments/:id', to: 'admins#delete_assignment', as: 'delete_admin_assignment'
+  patch '/admin/assignments/:id', to: 'admins#update_assignment', as: 'update_admin_assignment'
 
 end
