@@ -24,9 +24,10 @@
                   <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account</h5>
 
                   <div class="form-outline mb-4">
-                    <input class="form-control form-control-lg" type="number" name="account" id="account" required>
+                    <input class="form-control form-control-lg" name="account" required maxlength="8" pattern="[0-9]{1,8}">
+                    
                     <label class="form-label" for="form2Example17">Account</label>
-                  </div>
+                  </div>                  
 
                   <div class="form-outline mb-4">
                     <input class="form-control form-control-lg"  type="password" name="password" id="password" required>

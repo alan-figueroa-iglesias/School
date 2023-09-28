@@ -48,7 +48,7 @@
                             </div>
                             <div class="form-group mb-3">
                                 <h6>Number Account</h6>
-                                <%= f.number_field :account, class: "form-control", required: true, min: 10000000, max: 99999999, oninput: "this.value = this.value.slice(0, 8).replace(/[^0-9]/g, '')", title: "Enter a valid number account" %>
+                                <%= f.number_field :account, class: "form-control", value: @teacher.account, readonly: true %>
                             </div>
                             
                             <h6>Assignments</h6>
@@ -75,6 +75,7 @@
         </div>
     </div>
     </section>
+    <%= render 'alert' %>   
 <% else %>
 <p>No has iniciado sesión como admin.</p>
 <% end %>

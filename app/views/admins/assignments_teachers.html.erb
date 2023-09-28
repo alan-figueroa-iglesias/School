@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Administrator</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body> 
+<% if current_user.is_a?(Admin) %>
+
+  <main class="d-flex flex-nowrap">
+    <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary position-fixed vh-100" style="width: 280px;">
+      <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <img src="https://img.freepik.com/vector-gratis/diseno-icono-degradado-logotipo-empresa-moderna_53876-120504.jpg?w=826&t=st=1693366444~exp=1693367044~hmac=8dd716f6cb7664515a66c4f2707df8c484eaa72ae861ea2283305a6fb211f7ae" alt="" width="32" height="32" class="rounded-circle me-2">
+        <span class="fs-4">Hi, <%= current_user.name %></span>
+      </a>
+      <hr>
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <a href="<%= '/admin' %>" class="nav-link link-body-emphasis" aria-current="page">
+              <i class="fa-solid fa-house me-2"></i>Home
+          </a>
+        </li>
+        <li>
+          <a href="<%= '/admin/students' %>" class="nav-link link-body-emphasis">
+              <i class="fa-solid fa-graduation-cap me-2"></i>Students
+          </a>
+        </li>
+        <li>
+          <a href="<%= '/admin/teachers' %>" class="nav-link link-body-emphasis">
+              <i class="fa-solid fa-chalkboard-user me-2"></i>Teachers
+          </a>
+        </li>
+        <li>
+          <a href="<%= '/admin/assignments' %>" class="nav-link link-body-emphasis">
+              <i class="fa-solid fa-book-open me-2"></i>Assignments
+          </a>
+        </li>
+        <li><hr></li>
+        <li>
+          <a href="<%= '/admin/assignment_teacher' %>" class="nav-link active">
+              <i class="fa-solid fa-thumbtack"></i>Make a class
+          </a>
+        </li>
+      </ul>
+      <hr>
+      <div class="dropdown">
+        <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+          <strong>User</strong>
+        </a>
+        <ul class="dropdown-menu text-small shadow">
+          <li><a class="dropdown-item" href="#">Settings</a></li>
+          <li><a class="dropdown-item" href="#">Profile</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><%= link_to 'Sign out', logout_path, method: :delete, class: "dropdown-item" %></li>
+        </ul>
+      </div>
+    </div>  
+  </main>
+
+  <div class="container-xl">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2>Manage <b>Class</b></h2>
+                    </div>
+                <div class="col-sm-6">
+                    <div class="d-flex justify-content-end">
+                        <div class="search-box">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" class="form-control" placeholder="Search&hellip;">
+                        </div>
+                        <button id="addClassBtn" class="btn btn-success" data-toggle="modal" data-target="#addClassModal" style="width: 100px;"><i class="fa-solid fa-plus"></i> <span>Add</span></button> 
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="table-responsive custom-table-size">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Assignment</th>
+                    <th>Name Teacher</th>
+                    <th>Grade</th>
+                    <th>Group</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+              <% @assignments_teachers.each do |at| %>               
+                <tr>
+                  <td style="text-align: center;"><%= at.id %>              </td>
+                  <td style="text-align: center;"><%= at.assignment.name %> </td>
+                  <td style="text-align: center;">
+                    <% if at.teacher.present? %>
+                      <%= "#{at.teacher.name} #{at.teacher.last_name}" %>
+                    <% else %>
+                      <!-- Mostrar un espacio en blanco o un mensaje de tu elección -->
+                      Pending to assign a teacher
+                    <% end %>
+                  </td>
+                  <td style="text-align: center;"><%= at.grade %>           </td>
+                  <td style="text-align: center;"><%= at.group %>           </td>
+                  <td class="actions-column" style="text-align: center;">                               
+                    <%= link_to edit_admin_assignment_teacher_path(at), class: 'edit' do %>
+                      <i class="fa-solid fa-pen"></i>
+                    <% end %>
+                    <%= link_to delete_admin_assignment_teacher_path(at), method: :delete, data: { confirm: 'Delete this class?' }, class: 'delete' do %>
+                      <i class="fa-solid fa-trash"></i>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+        </table>
+        </div>
+        <div class="clearfix">
+            <div class="hint-text">Showing <b>1</b> out of <b>?</b> entries</div>
+            <%= will_paginate @assignments_teachers, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>            
+        </div>
+
+        </div>
+    </div>        
+</div>
+
+<%= form_for :assignment_teacher, url: '/admin/create_assignment_teacher' do |f| %>
+    <div id="addClassModal" class="modal fade">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">											
+                    <h4 class="modal-title">Add Class</h4>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <%= f.label :'Name Assignment'%>
+                        <%= f.collection_select(:assignment_id, Assignment.all, :id, :name, { selected: Assignment.first.id }, { class: 'form-select', required: true }) %>
+                    </div> 					
+                    <div class="form-group">
+                        <%= f.label :'Name Teacher'%>
+                        <%= f.collection_select(:teacher_id, Teacher.all, :id, lambda { |teacher| "#{teacher.name} #{teacher.last_name}" }, { selected: Teacher.first.id }, { class: 'form-select', required: true }) %>
+                    </div> 
+                    <div class="form-group">
+                        <%= f.label :Grade %>
+                        <%= f.select :grade, [1,2,3,4,5,6], { selected: 1 }, class: "form-select", required: true %>                                        
+                    </div>
+                    <div class="form-group">
+                        <%= f.label :Groups %>
+                        <div class="form-check form-check-inline" style="position: relative; float: right;">
+                          <label class="form-check-label" style="position: absolute; top: 50%; transform: translateY(-50%);">All</label>
+                          <input class="form-check-input" type="checkbox" id="select-all-checkbox" style="width: 20px; height: 20px; margin-right: 5px;">
+                        </div>
+                        <br>
+                        <% ('A'..'F').to_a.each do |group| %>
+                          <div class="form-check form-check-inline" style="position: relative;">
+                            <%= check_box_tag 'assignment_teacher[group][]', group, false, class: 'form-check-input', style: "width: 20px; height: 20px; margin-right: 5px;" %>
+                            <%= label_tag "assignment_teacher_group_#{group}", group, class: 'form-check-label', style: "position: absolute; top: 50%; transform: translateY(-50%);" %>
+                          </div>
+                        <% end %>
+                    </div>                 
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                    <%= f.submit "Add", class: "btn btn-success"%>
+                </div>
+            </div>
+        </div>
+    </div>
+  <% end %>
+  
+  
+ 
+  <%= render 'alert' %>  
+
+<% else %>
+  <p>No has iniciado sesión como admin.</p>
+<% end %>
+  
+  
+</body>
+</html>

@@ -10,8 +10,6 @@ Rails.application.routes.draw do
   get '/teacher', to: 'teachers#home', as: 'teacher_dashboard'
   get '/admin', to: 'admins#home', as: 'admin_dashboard'
 
-  get '/admin/teacher_assignments', to: 'admins#teacher_assignments'
-
   get '/login', to: 'pages#login'
   post '/login', to: 'pages#login_session' # Ruta para el inicio de sesión (POST)
   delete '/logout', to: 'pages#destroy'
@@ -34,4 +32,9 @@ Rails.application.routes.draw do
   delete '/admin/assignments/:id', to: 'admins#delete_assignment', as: 'delete_admin_assignment'
   patch '/admin/assignments/:id', to: 'admins#update_assignment', as: 'update_admin_assignment'
 
+  get '/admin/assignments_teachers', to: 'admins#assignments_teachers'
+  get '/admin/assignments_teachers/:id/edit', to: 'admins#edit_assignment_teacher', as: 'edit_admin_assignment_teacher'
+  post '/admin/create_assignment_teacher', to: 'admins#create_assignment_teacher'
+  delete '/admin/assignments_teachers/:id', to: 'admins#delete_assignment_teacher', as: 'delete_admin_assignment_teacher'
+  patch '/admin/assignments_teachers/:id', to: 'admins#update_assignment_teacher', as: 'update_admin_assignment_teacher'
 end

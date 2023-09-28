@@ -40,6 +40,12 @@
                         <i class="fa-solid fa-book-open me-2"></i>Assignments
                     </a>
                 </li>
+                <li><hr></li>
+                <li>
+                    <a href="<%= '/admin/assignments_teachers' %>" class="nav-link link-body-emphasis">
+                        <i class="fa-solid fa-thumbtack"></i>Make a class
+                    </a>
+                </li>
             </ul>
             <hr>
             <div class="dropdown">
@@ -83,8 +89,6 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Grade</th>
-                        <th>Group</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -93,8 +97,6 @@
                         <tr> 
                             <td style="text-align: center;"> <%= assignment.id %>          </td>
                             <td style="text-align: center;"> <%= assignment.name %>        </td>
-                            <td style="text-align: center;"> <%= assignment.grade %>       </td>
-                            <td style="text-align: center;"> <%= assignment.group %>       </td>
                             <td class="actions-column">                               
                                 <%= link_to edit_admin_assignment_path(assignment), class: 'edit' do %>
                                     <i class="fa-solid fa-pen"></i>
@@ -130,25 +132,7 @@
                     <div class="form-group">
                         <%= f.label :Name%>
                         <%= f.text_field :name, class: "form-control", required: true, pattern: "[a-zA-Zá-úÁ-Ú\s]*", title: "Enter a valid assignature"  %>
-                    </div> 
-                    <div class="form-group">
-                        <%= f.label :Grade %>
-                        <%= f.select :grade, [1,2,3,4,5,6], { selected: 1 }, class: "form-select", required: true %>                                        
-                    </div>
-                    <div class="form-group">
-                        <%= f.label :Group %>
-                        <div class="form-check form-check-inline" style="position: relative; float: right;">
-                            <label class="form-check-label" style="position: absolute; top: 50%; transform: translateY(-50%);" >All</label> 
-                            <input class="form-check-input" type="checkbox" id="select-all-checkbox" style="width: 20px; height: 20px; margin-right: 5px;">
-                        </div>
-                        <br> 
-                        <% ('A'..'F').to_a.each do |group| %>
-                          <div class="form-check form-check-inline" style="position: relative;">
-                            <%= check_box_tag 'assignment[group][]', group, params[:assignment].present? && params[:assignment][:group].present? && params[:assignment][:group].include?(group), class: 'form-check-input', style: "width: 20px; height: 20px; margin-right: 5px;" %>
-                            <%= label_tag "assignment_group_#{group}", group, class: 'form-check-label', style: "position: absolute; top: 50%; transform: translateY(-50%);" %>
-                          </div>
-                        <% end %>
-                    </div>                   
+                    </div>              
                 </div>
                 <div class="modal-footer">
                     <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">

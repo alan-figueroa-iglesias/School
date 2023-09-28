@@ -1,8 +1,10 @@
 class Teacher < ApplicationRecord
+    validates_uniqueness_of :account
+    validates_uniqueness_of :email
     has_secure_password
-    has_many :teacher_assignments
-    has_many :assigments, through: :teacher_assigments
-    has_many :assignments
+
+    has_many :assignment_teachers, class_name: "AssignmentTeachers" 
+    has_many :assignments, through: :assignment_teachers
 
     #validates :photo, presence: true 
     validates :name, presence: true

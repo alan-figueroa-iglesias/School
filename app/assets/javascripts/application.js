@@ -22,7 +22,7 @@
 // Function for mark all checkboxes in the groups assignments
 document.addEventListener('DOMContentLoaded', function () {
     const selectAllCheckbox = document.getElementById('select-all-checkbox');
-    const groupCheckboxes = document.querySelectorAll('input[name="assignment[group][]"]');
+    const groupCheckboxes = document.querySelectorAll('input[name="assignment_teacher[group][]"]');
 
     selectAllCheckbox.addEventListener('change', function () {
         groupCheckboxes.forEach(function (checkbox) {
