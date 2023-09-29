@@ -35,9 +35,6 @@ class PagesController < ApplicationController
     private
 
     def detect_user(account)
-        # Implementa lógica para detectar automáticamente el tipo de usuario
-        # basado en el atributo único (por ejemplo, 'username' o 'student_id').
-        # Retorna la instancia del usuario o nil si no se encuentra.
         admin = Admin.find_by(account: account)
         student = Student.find_by(account: account)
         teacher = Teacher.find_by(account: account)

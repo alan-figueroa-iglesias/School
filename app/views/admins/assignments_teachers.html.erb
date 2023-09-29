@@ -99,12 +99,17 @@
               <% @assignments_teachers.each do |at| %>               
                 <tr>
                   <td style="text-align: center;"><%= at.id %>              </td>
-                  <td style="text-align: center;"><%= at.assignment.name %> </td>
+                  <td style="text-align: center;">
+                    <% if at.assignment.present? %>
+                      <%= at.assignment.name %>
+                    <% else %>
+                    Pending to assign an assignment
+                    <% end %>
+                  </td>
                   <td style="text-align: center;">
                     <% if at.teacher.present? %>
                       <%= "#{at.teacher.name} #{at.teacher.last_name}" %>
                     <% else %>
-                      <!-- Mostrar un espacio en blanco o un mensaje de tu elección -->
                       Pending to assign a teacher
                     <% end %>
                   </td>
@@ -143,11 +148,19 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <%= f.label :'Name Assignment'%>
-                        <%= f.collection_select(:assignment_id, Assignment.all, :id, :name, { selected: Assignment.first.id }, { class: 'form-select', required: true }) %>
+                        <% if Assignment.count.zero? %>
+                          <p class="form-select text-danger">There are no assignments available in the database. Please add assignments before continuing.</p>
+                        <% else %>
+                          <%= f.collection_select(:assignment_id, Assignment.all, :id, :name, { selected: Assignment.first.id }, { class: 'form-select', required: true }) %>
+                        <% end %>
                     </div> 					
                     <div class="form-group">
                         <%= f.label :'Name Teacher'%>
-                        <%= f.collection_select(:teacher_id, Teacher.all, :id, lambda { |teacher| "#{teacher.name} #{teacher.last_name}" }, { selected: Teacher.first.id }, { class: 'form-select', required: true }) %>
+                        <% if Teacher.count.zero? %>
+                          <p class="form-select text-danger">There are no teachers available in the database. Please add teachers before continuing.</p>
+                        <% else %>
+                          <%= f.collection_select(:teacher_id, Teacher.all, :id, lambda { |teacher| "#{teacher.name} #{teacher.last_name}" }, { selected: Teacher.first.id }, { class: 'form-select', required: true }) %>
+                        <% end %>
                     </div> 
                     <div class="form-group">
                         <%= f.label :Grade %>

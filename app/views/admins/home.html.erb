@@ -17,6 +17,7 @@
       <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
         <img src="https://img.freepik.com/vector-gratis/diseno-icono-degradado-logotipo-empresa-moderna_53876-120504.jpg?w=826&t=st=1693366444~exp=1693367044~hmac=8dd716f6cb7664515a66c4f2707df8c484eaa72ae861ea2283305a6fb211f7ae" alt="" width="32" height="32" class="rounded-circle me-2">
         <span class="fs-4">Hi, <%= current_user.name %></span>
+        
       </a>
       <hr>
       <ul class="nav nav-pills flex-column mb-auto">
@@ -69,8 +70,8 @@
   <div class="modal-dialog modal-dialog-centered" style="margin: 300px;">                                               
     <p>Welcome <%= current_user.class.name %>:</p>
     <ul>
-      <li>Nombre: </li>
-      <li>Email: <%= current_user.email %></li>
+      <li>Nombre: <%= current_user.name %></li>
+      <li>Account: <%= current_user.account %></li>
     </ul>                    
   </div>
   <%= render 'alert' %>  

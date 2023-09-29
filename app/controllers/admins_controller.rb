@@ -1,10 +1,25 @@
 class AdminsController < ApplicationController
 
+
+  
   #-----------------------------------------------------------------------------------------------
 
   def students
     @students = Student.paginate(page: params[:page], per_page: 12)
     @student_new = Student.new
+    generate_student_account
+    generate_password
+  end
+
+  def generate_student_account
+    if last_account = Student.maximum(:account)
+      new_account = last_account + 1
+      @account = new_account.to_i
+    else
+      year = Time.now.year
+      reset = 0000
+      @account = "#{year}#{reset.to_s.rjust(4, '0')}"
+    end
   end
 
   def create_student
@@ -26,7 +41,7 @@ class AdminsController < ApplicationController
     if @student.update(student_params)
       redirect_to '/admin/students', flash: { success: 'Student was successfully updated.' }
     else
-      render :edit_student
+      redirect_to edit_admin_student_path(@student), flash: { alert: 'Failed to update student. Please try again.' }
     end
   end
 
@@ -42,6 +57,7 @@ class AdminsController < ApplicationController
     @teachers = Teacher.paginate(page: params[:page], per_page: 12)
     @teacher_new = Teacher.new
     generate_teacher_account
+    generate_password
   end
 
   def generate_teacher_account
@@ -57,7 +73,7 @@ class AdminsController < ApplicationController
   def create_teacher
     @teacher_new = Teacher.new(teacher_params)
     if @teacher_new.save
-      redirect_to '/admin/teachers', flash: { success: 'Teacher was successfully created.' }
+      redirect_to '/admin/teachers', flash: { success: "Teacher was successfully created. Password #{@password}" }
     else
       @teachers = Teacher.paginate(page: params[:page], per_page: 12)
       redirect_to '/admin/teachers', flash: { alert: 'Failed to create teacher. Please try again.' }
@@ -87,7 +103,6 @@ class AdminsController < ApplicationController
 
   def assignments
     @assignments = Assignment.order(:name).paginate(page: params[:page], per_page: 12)
-    
     @assignment_new = Assignment.new
   end
   
@@ -168,7 +183,6 @@ class AdminsController < ApplicationController
   def update_assignment_teacher
     @assignment_teacher = AssignmentTeachers.find(params[:id])
   
-    # Verifica si los parámetros esperados están presentes
     if params[:assignment_teachers].present? && params[:assignment_teacher].present?
       assignment_id = params[:assignment_teachers][:assignment_id]
       teacher_id = params[:assignment_teachers][:teacher_id]
@@ -185,16 +199,21 @@ class AdminsController < ApplicationController
     end
   end
   
-  
   def delete_assignment_teacher
     @assignment_teacher = AssignmentTeachers.find(params[:id])
     @assignment_teacher.destroy
     redirect_to '/admin/assignments_teachers', flash: { warning: 'Class was successfully deleted.' }
   end
   
-
-  
   private
+
+  def generate_password(length = 8)
+    characters = ('a'..'z').to_a + ('A'..'Z').to_a + ('0'..'9').to_a
+    @password = ''
+    length.times { @password << characters.sample }
+    puts "---------- THE PASSWORD IS ---------- #{@password}"
+    @password
+  end
 
   def student_params
     params.require(:student).permit(:name, :last_name, :email, :password, :account, :grade, :group)
